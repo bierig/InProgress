@@ -11,6 +11,10 @@ html {
 }
 body {
   margin: 0;
+  background: url('notebook.png');
+  background-size: 1440px 800px;
+  background-repeat: no-repeat;
+  display: compact;
 }
 article,
 aside,
