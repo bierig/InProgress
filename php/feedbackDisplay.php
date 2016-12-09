@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Case</title>
+  <title>Feedback Display</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../css/bootstrap.min.css">
@@ -12,44 +12,49 @@
 
 <div class="container">
   <h2>Feedback Display</h2> 
- 
+
   <div class="panel panel-default"> 
-    <table class="table">
-      <thead>
-        <tr> 
-          <th>#</th>
-          <th>Module</th>
-          <th>Semester</th>
-          <th>Text</th>
-          <th>Rating</th>
-        </tr>
-      </thead>
-    <tbody>
+        <table class="table">
+          <thead>
+            <tr> 
+              <th>#</th>
+              <th>Module</th>
+              <th>Semester</th>
+              <th>Text</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <?php
+            
+            // load xml file 
+            $xml = simplexml_load_file("./data/feedbacks.xml") or die("ERROR: Cannot load feedbacks.xml!");
+   
+            $n = 1;
+            
+            // loop: one row for each feedback
+            foreach($xml->children() as $feedback){
               
-    <?php
-      $xml=simplexml_load_file("./data/feedbacks.xml") or die("ERROR: Cannot load feedbacks.xml file.");
+              echo "<tr>"; // start of table row
+              echo "<th scope=\"row\">" . $n . "</th>"; 
               
-      $n = 1; // simple counter
+              // loop: one column for each element inside the feedback
+              foreach($feedback->children() as $child){
+                echo "<td>" . $child . "</td>";
+              }
               
-      foreach($xml->children() as $feedback) {
-                
-        echo "<tr>"; // beginning of row
-        echo "<th scope=\"row\">" . $n . "</th>";
-        
-        foreach($feedback->children() as $child){
-          echo "<td>" . $child . "</td>";
-        }
-                
-        echo "</tr>"; // end of row
-        $n++;
-      }
-              
-      ?>
-              
-      </tbody> 
+              echo "</tr>"; // end of table row
+              $n++;
+            }
+            
+            ?>
+            
+          </tbody> 
     </table> 
   </div>
-</div>
+  
+  </div>
 
 </body>
 </html>
